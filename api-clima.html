@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>El Clima en tu ciudad</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+    <style>
+        div.col{
+            display: inline-block;
+        }
+        h3 h4{
+            display: inline-block;
+        }
+    </style>
+
+    
+    <script>
+        $(document).ready(function () {
+
+            $("#accion").on("click", function () {
+                let ciudad = $("#ciudad").val();
+                //console.log(ciudad);
+                
+                $("h3.ciudad").html(ciudad);
+
+                let url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=21feef81a2e66b2cf1fb72fb94323891&units=metric&lang=es`;
+
+                $.get(url,function(res){
+                    //console.log(res.weather[0].description);
+                    $("h4.descripcion").html(res.weather[0].description);
+                    //console.log(res.main.temp);
+                    $("h4.temperatura").html(res.main.temp);
+                    //console.log(res.coord.lon);
+                    //console.log(res.coord.lat);
+                    $("h4.lon").html(res.coord.lon);
+                    $("h4.lat").html(res.coord.lat);
+
+
+                },"json");
+
+
+
+            });
+        })
+
+        
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <h1>El Clima en tu cuidad</h1>
+        </div>
+        <div class="row mt-5 busqueda">
+            <div class="col col-6">
+                
+                    <h4>Ciudad :</h4>
+                    <input id="ciudad" type="text">
+                
+            </div>
+            <div class="col col-4">
+                <button id="accion">BUSCAR!</button>
+            </div>    
+        </div> 
+        <div class="row mt-5 resultados">
+            <h3 class="ciudad"></h3>
+            <h4 class="descripcion"></h4>
+            <h3 class="Temperatura">Temperatura</h3>
+            <h4 class="temperatura"></h4>
+            <h3 class="coord">Coord</h3>
+            <h4 class="lat"></h4>
+            <h4 class="lon"></h4>
+
+
+        </div>   
+        
+    </div>
+</body>
+
+</html>
